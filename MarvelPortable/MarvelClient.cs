@@ -152,6 +152,12 @@ namespace MarvelPortable
             return await response.Data.ToCollection<CharacterResponse>();
         }
 
+        public async Task<ComicResponse> GetComicsForCharacterAsync(
+            int characterId)
+        {
+            return new ComicResponse();
+        }
+
         private async Task<TReturnType> GetResponse<TReturnType>(string method, string options, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string callingMethod = "") where TReturnType : MarvelBase
         {
             var fullOptions = string.Concat(options, GetHashAndTimeStamp());

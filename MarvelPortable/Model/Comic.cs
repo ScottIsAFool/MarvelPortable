@@ -93,4 +93,8 @@ namespace MarvelPortable.Model
         [JsonProperty("events")]
         public Collection Events { get; set; }
     }
+
+    public class ComicResponse : Data<Comic>
+    {
+    }
 }

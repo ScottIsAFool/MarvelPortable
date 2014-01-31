@@ -40,6 +40,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\DescriptionAttribute.cs" />
+    <Compile Include="Extensions\AttributeExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\SerialisationExtensions.cs" />
@@ -53,9 +55,12 @@
     <Compile Include="Model\CollectionItem.cs" />
     <Compile Include="Model\CollectionUri.cs" />
     <Compile Include="Model\Comic.cs" />
+    <Compile Include="Model\ComicFormat.cs" />
+    <Compile Include="Model\ComicType.cs" />
     <Compile Include="Model\Creator.cs" />
     <Compile Include="Model\Creators.cs" />
     <Compile Include="Model\Data.cs" />
+    <Compile Include="Model\DateDescriptor.cs" />
     <Compile Include="Model\DateItem.cs" />
     <Compile Include="Model\ImageItem.cs" />
     <Compile Include="Model\MarvelBase.cs" />
