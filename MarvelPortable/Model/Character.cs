@@ -39,4 +39,6 @@ namespace MarvelPortable.Model
         [JsonProperty("urls")]
         public Url[] Urls { get; set; }
     }
+
+    public class CharacterResponse : Data<Character>{}
 }
