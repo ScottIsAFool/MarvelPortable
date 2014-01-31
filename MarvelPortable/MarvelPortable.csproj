@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\SerialisationExtensions.cs" />
     <Compile Include="Helpers\MD5.cs" />
     <Compile Include="Logging\ILogger.cs" />
@@ -50,10 +51,20 @@
     <Compile Include="Model\Character.cs" />
     <Compile Include="Model\Collection.cs" />
     <Compile Include="Model\CollectionItem.cs" />
+    <Compile Include="Model\CollectionUri.cs" />
+    <Compile Include="Model\Comic.cs" />
+    <Compile Include="Model\Creator.cs" />
+    <Compile Include="Model\Creators.cs" />
     <Compile Include="Model\Data.cs" />
+    <Compile Include="Model\DateItem.cs" />
+    <Compile Include="Model\ImageItem.cs" />
+    <Compile Include="Model\MarvelBase.cs" />
+    <Compile Include="Model\MarvelException.cs" />
     <Compile Include="Model\OrderBy.cs" />
+    <Compile Include="Model\PriceItem.cs" />
     <Compile Include="Model\Response.cs" />
     <Compile Include="Model\SortBy.cs" />
+    <Compile Include="Model\TextObject.cs" />
     <Compile Include="Model\Thumbnail.cs" />
     <Compile Include="Model\Url.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
