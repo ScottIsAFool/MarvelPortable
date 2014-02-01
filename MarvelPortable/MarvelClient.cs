@@ -11,7 +11,7 @@ using MarvelPortable.Model;
 
 namespace MarvelPortable
 {
-    public class MarvelClient
+    public class MarvelClient : IMarvelClient
     {
         private const string ApiUrl = "http://gateway.marvel.com/v1/public";
 
@@ -53,8 +53,10 @@ namespace MarvelPortable
         public string PrivateKey { get; private set; }
         #endregion
 
+        #region Character Methods
+
         /// <summary>
-        /// Gets the characters asynchronous.
+        /// Gets the characters.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="modifiedSince">The modified since.</param>
@@ -110,7 +112,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the character asynchronous.
+        /// Gets the character.
         /// </summary>
         /// <param name="characterId">The character identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -125,7 +127,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the comics for character asynchronous.
+        /// Gets the comics for character.
         /// </summary>
         /// <param name="characterId">The character identifier.</param>
         /// <param name="comicFormat">The comic format.</param>
@@ -200,7 +202,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the events for character asynchronous.
+        /// Gets the events for character.
         /// </summary>
         /// <param name="characterId">The character identifier.</param>
         /// <param name="eventName">Name of the event.</param>
@@ -258,7 +260,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the stories for character asynchronous.
+        /// Gets the stories for character.
         /// </summary>
         /// <param name="characterId">The character identifier.</param>
         /// <param name="modifiedSince">The modified since.</param>
@@ -308,9 +310,11 @@ namespace MarvelPortable
 
             return await response.Data.ToCollection<StoryResponse>();
         }
+        #endregion
 
+        #region Comics Methods
         /// <summary>
-        /// Gets the comics asynchronous.
+        /// Gets the comics.
         /// </summary>
         /// <param name="comicFormat">The comic format.</param>
         /// <param name="comicType">Type of the comic.</param>
@@ -382,7 +386,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the comic asynchronous.
+        /// Gets the comic.
         /// </summary>
         /// <param name="comicId">The comic identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -480,7 +484,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the stories for comic asynchronous.
+        /// Gets the stories for comic.
         /// </summary>
         /// <param name="comicId">The comic identifier.</param>
         /// <param name="modifiedSince">The modified since.</param>
@@ -532,7 +536,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the events for comic asynchronous.
+        /// Gets the events for comic.
         /// </summary>
         /// <param name="comicId">The comic identifier.</param>
         /// <param name="eventName">Name of the event.</param>
@@ -588,7 +592,9 @@ namespace MarvelPortable
 
             return await response.Data.ToCollection<EventResponse>();
         }
+        #endregion
 
+        #region Creator Methods
         public async Task<CreatorResponse> GetCreatorsAsync(
             string firstName = null,
             string middleName = null,
@@ -633,7 +639,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the creator asynchronous.
+        /// Gets the creator.
         /// </summary>
         /// <param name="creatorId">The creator identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -648,7 +654,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the comics for creator asynchronous.
+        /// Gets the comics for creator.
         /// </summary>
         /// <param name="creatorId">The creator identifier.</param>
         /// <param name="comicFormat">The comic format.</param>
@@ -721,7 +727,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the events for creator asynchronous.
+        /// Gets the events for creator.
         /// </summary>
         /// <param name="comicId">The comic identifier.</param>
         /// <param name="eventName">Name of the event.</param>
@@ -779,7 +785,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the stories for creator asynchronous.
+        /// Gets the stories for creator.
         /// </summary>
         /// <param name="creatorId">The creator identifier.</param>
         /// <param name="modifiedSince">The modified since.</param>
@@ -832,9 +838,11 @@ namespace MarvelPortable
 
             return await response.Data.ToCollection<StoryResponse>();
         }
+        #endregion
 
+        #region Events Methods
         /// <summary>
-        /// Gets the events asynchronous.
+        /// Gets the events.
         /// </summary>
         /// <param name="eventName">Name of the event.</param>
         /// <param name="modifiedSince">The modified since.</param>
@@ -892,7 +900,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the event asynchronous.
+        /// Gets the event.
         /// </summary>
         /// <param name="eventId">The event identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -907,7 +915,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the characters for event asynchronous.
+        /// Gets the characters for event.
         /// </summary>
         /// <param name="eventId">The event identifier.</param>
         /// <param name="name">The name.</param>
@@ -960,7 +968,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the comics for event asynchronous.
+        /// Gets the comics for event.
         /// </summary>
         /// <param name="eventId">The event identifier.</param>
         /// <param name="comicFormat">The comic format.</param>
@@ -1035,7 +1043,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the creators for event asynchronous.
+        /// Gets the creators for event.
         /// </summary>
         /// <param name="eventId">The event identifier.</param>
         /// <param name="firstName">The first name.</param>
@@ -1097,7 +1105,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the stories for event asynchronous.
+        /// Gets the stories for event.
         /// </summary>
         /// <param name="eventId">The event identifier.</param>
         /// <param name="modifiedSince">The modified since.</param>
@@ -1152,7 +1160,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the series asynchronous.
+        /// Gets the series.
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="modifiedSince">The modified since.</param>
@@ -1213,9 +1221,11 @@ namespace MarvelPortable
 
             return await response.Data.ToCollection<SeriesResponse>();
         }
+        #endregion
 
+        #region Series Methods
         /// <summary>
-        /// Gets the series asynchronous.
+        /// Gets the series.
         /// </summary>
         /// <param name="seriesId">The series identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1229,7 +1239,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the characters for series asynchronous.
+        /// Gets the characters for series.
         /// </summary>
         /// <param name="seriesId">The series identifier.</param>
         /// <param name="name">The name.</param>
@@ -1282,7 +1292,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the comics for series asynchronous.
+        /// Gets the comics for series.
         /// </summary>
         /// <param name="characterId">The character identifier.</param>
         /// <param name="comicFormat">The comic format.</param>
@@ -1355,7 +1365,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the creators for series asynchronous.
+        /// Gets the creators for series.
         /// </summary>
         /// <param name="seriesId">The series identifier.</param>
         /// <param name="firstName">The first name.</param>
@@ -1459,7 +1469,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the stories for series asynchronous.
+        /// Gets the stories for series.
         /// </summary>
         /// <param name="seriesId">The series identifier.</param>
         /// <param name="modifiedSince">The modified since.</param>
@@ -1514,7 +1524,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the stories asynchronous.
+        /// Gets the stories.
         /// </summary>
         /// <param name="modifiedSince">The modified since.</param>
         /// <param name="creatorIds">The creator ids.</param>
@@ -1566,9 +1576,11 @@ namespace MarvelPortable
             var response = await GetResponse<Response<Story>>("stories", options, cancellationToken);
             return await response.Data.ToCollection<StoryResponse>();
         }
+        #endregion
 
+        #region Story Methods
         /// <summary>
-        /// Gets the story asynchronous.
+        /// Gets the story.
         /// </summary>
         /// <param name="storyId">The story identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1581,7 +1593,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the characters for story asynchronous.
+        /// Gets the characters for story.
         /// </summary>
         /// <param name="storyId">The story identifier.</param>
         /// <param name="name">The name.</param>
@@ -1634,7 +1646,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the comics for story asynchronous.
+        /// Gets the comics for story.
         /// </summary>
         /// <param name="storyId">The character identifier.</param>
         /// <param name="comicFormat">The comic format.</param>
@@ -1648,7 +1660,6 @@ namespace MarvelPortable
         /// <param name="creatorIds">The creator ids.</param>
         /// <param name="seriesIds">The series ids.</param>
         /// <param name="eventIds">The event ids.</param>
-        /// <param name="storyIds">The story ids.</param>
         /// <param name="otherCharacterIds">The other character ids.</param>
         /// <param name="collaboratorIds">The collaborator ids.</param>
         /// <param name="sortBy">The sort by.</param>
@@ -1708,7 +1719,7 @@ namespace MarvelPortable
         }
 
         /// <summary>
-        /// Gets the creators for story asynchronous.
+        /// Gets the creators for story.
         /// </summary>
         /// <param name="storyId">The story identifier.</param>
         /// <param name="firstName">The first name.</param>
@@ -1811,7 +1822,7 @@ namespace MarvelPortable
 
             return await response.Data.ToCollection<EventResponse>();
         }
-
+        #endregion
 
         #region Internal methods
         private static Dictionary<string, string> GetComicsDictionaryInternal(
