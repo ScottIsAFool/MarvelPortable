@@ -19,7 +19,7 @@ namespace MarvelPortable.Model
         public string Modified { get; set; }
 
         [JsonProperty("thumbnail")]
-        public Thumbnail Thumbnail { get; set; }
+        public ImageItem Thumbnail { get; set; }
 
         [JsonProperty("resourceURI")]
         public string ResourceUri { get; set; }

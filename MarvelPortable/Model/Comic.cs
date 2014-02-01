@@ -76,7 +76,7 @@ namespace MarvelPortable.Model
         public PriceItem[] Prices { get; set; }
 
         [JsonProperty("thumbnail")]
-        public Thumbnail Thumbnail { get; set; }
+        public ImageItem Thumbnail { get; set; }
 
         [JsonProperty("images")]
         public ImageItem[] Images { get; set; }

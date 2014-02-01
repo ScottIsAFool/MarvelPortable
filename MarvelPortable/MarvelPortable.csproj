@@ -70,7 +70,6 @@
     <Compile Include="Model\Response.cs" />
     <Compile Include="Model\SortBy.cs" />
     <Compile Include="Model\TextObject.cs" />
-    <Compile Include="Model\Thumbnail.cs" />
     <Compile Include="Model\Url.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
