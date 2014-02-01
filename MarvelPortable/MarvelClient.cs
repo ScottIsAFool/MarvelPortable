@@ -21,15 +21,15 @@ namespace MarvelPortable
         #region Constructors
         public MarvelClient(string apiKey, string privateKey)
             : this(apiKey, privateKey, null, new NullLogger())
-        {}
+        { }
 
         public MarvelClient(string apiKey, string privateKey, HttpMessageHandler handler)
             : this(apiKey, privateKey, handler, new NullLogger())
-        {}
+        { }
 
         public MarvelClient(string apiKey, string privateKey, ILogger logger)
             : this(apiKey, privateKey, null, logger)
-        {}
+        { }
 
         public MarvelClient(string apiKey, string privateKey, HttpMessageHandler handler, ILogger logger)
         {
@@ -43,7 +43,7 @@ namespace MarvelPortable
             _logger = logger ?? new NullLogger();
 
             HttpClient = handler == null
-                ? new HttpClient(new HttpClientHandler {AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip})
+                ? new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip })
                 : new HttpClient(handler);
         }
         #endregion
@@ -83,35 +83,12 @@ namespace MarvelPortable
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var postData = new Dictionary<string, string>();
-            if(!string.IsNullOrEmpty(name))
-            {
-                postData.Add("name", name);
-            }
-
-            if (modifiedSince.HasValue)
-            {
-                postData.Add("modifiedSince", modifiedSince.Value.ToString());
-            }
-
-            if (comicIds != null && comicIds.Any())
-            {
-                postData.Add("comics", string.Join(",", comicIds));
-            }
-
-            if (seriesIds != null && seriesIds.Any())
-            {
-                postData.Add("series", string.Join(",", seriesIds));
-            }
-
-            if (eventIds != null && eventIds.Any())
-            {
-                postData.Add("events", string.Join(",", eventIds));
-            }
-
-            if (storyIds != null && storyIds.Any())
-            {
-                postData.Add("stories", string.Join(",", storyIds));
-            }
+            postData.AddIfNotNull("name", name);
+            postData.AddIfNotNull("modifiedSince", modifiedSince);
+            postData.AddIfNotNull("comics", comicIds);
+            postData.AddIfNotNull("series", seriesIds);
+            postData.AddIfNotNull("events", eventIds);
+            postData.AddIfNotNull("stories", storyIds);
 
             var sort = sortBy.ToString().ToLower();
             if (orderBy == OrderBy.Descending)
@@ -120,15 +97,8 @@ namespace MarvelPortable
             }
             postData.Add("orderBy", sort);
 
-            if (limit.HasValue)
-            {
-                postData.Add("limit", limit.Value.ToString());
-            }
-
-            if (offset.HasValue)
-            {
-                postData.Add("offset", offset.Value.ToString());
-            }
+            postData.AddIfNotNull("limit", limit);
+            postData.AddIfNotNull("offset", offset);
 
             var options = postData.ToQueryString();
 
@@ -153,8 +123,31 @@ namespace MarvelPortable
         }
 
         public async Task<ComicResponse> GetComicsForCharacterAsync(
-            int characterId)
+            int characterId,
+            ComicFormat? comicFormat = null,
+            ComicType? comicType = null,
+            bool? noVariants = null,
+            DateDescriptor? dateDescriptor = null,
+            DateTime? fromDate = null,
+            DateTime? toDate = null,
+            bool? hasDigitalIssue = null,
+            DateTime? modifiedSince = null,
+            List<int> creatorIds = null,
+            List<int> seriesIds = null,
+            List<int> eventIds = null,
+            List<int> storyIds = null,
+            List<int> otherCharacterIds = null,
+            List<int> collaboratorIds = null,
+            ComicSortBy? sortBy = null,
+            OrderBy? orderBy = null,
+            int? limit = null,
+            int? offset = null)
         {
+            var postData = new Dictionary<string, string> { { "characterId", characterId.ToString() } };
+
+            postData.AddIfNotNull("format", comicFormat);
+
+
             return new ComicResponse();
         }
 
@@ -164,7 +157,9 @@ namespace MarvelPortable
 
             var url = string.Format("{0}/{1}?{2}", ApiUrl, method, fullOptions);
 
+            _logger.Debug("Calling method: ", callingMethod);
             _logger.Debug("GET: {0}", url);
+
             var requestTime = DateTime.Now;
 
             var response = await HttpClient.GetAsync(url, cancellationToken);

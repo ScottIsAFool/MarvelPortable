@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Attributes\DescriptionAttribute.cs" />
     <Compile Include="Extensions\AttributeExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\SerialisationExtensions.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Model\CollectionUri.cs" />
     <Compile Include="Model\Comic.cs" />
     <Compile Include="Model\ComicFormat.cs" />
+    <Compile Include="Model\ComicSortBy.cs" />
     <Compile Include="Model\ComicType.cs" />
     <Compile Include="Model\Creator.cs" />
     <Compile Include="Model\Creators.cs" />
