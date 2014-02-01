@@ -64,13 +64,17 @@
     <Compile Include="Model\Data.cs" />
     <Compile Include="Model\DateDescriptor.cs" />
     <Compile Include="Model\DateItem.cs" />
+    <Compile Include="Model\Event.cs" />
     <Compile Include="Model\ImageItem.cs" />
     <Compile Include="Model\MarvelBase.cs" />
     <Compile Include="Model\MarvelException.cs" />
+    <Compile Include="Model\Next.cs" />
     <Compile Include="Model\OrderBy.cs" />
+    <Compile Include="Model\Previous.cs" />
     <Compile Include="Model\PriceItem.cs" />
     <Compile Include="Model\Response.cs" />
     <Compile Include="Model\SortBy.cs" />
+    <Compile Include="Model\StoryResponse.cs" />
     <Compile Include="Model\TextObject.cs" />
     <Compile Include="Model\Url.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
