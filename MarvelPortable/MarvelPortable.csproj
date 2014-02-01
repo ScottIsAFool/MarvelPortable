@@ -59,6 +59,7 @@
     <Compile Include="Model\ComicFormat.cs" />
     <Compile Include="Model\ComicSortBy.cs" />
     <Compile Include="Model\ComicType.cs" />
+    <Compile Include="Model\CreatorItem.cs" />
     <Compile Include="Model\Creator.cs" />
     <Compile Include="Model\Creators.cs" />
     <Compile Include="Model\Data.cs" />

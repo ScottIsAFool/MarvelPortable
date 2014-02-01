@@ -3,6 +3,8 @@
     public enum SortBy
     {
         Name,
-        Modified
+        StartDate,
+        Modified,
+        Id
     }
 }

@@ -13,7 +13,7 @@ namespace MarvelPortable.Model
         public string CollectionUri { get; set; }
 
         [JsonProperty("items")]
-        public Creator[] Items { get; set; }
+        public CreatorItem[] Items { get; set; }
 
         [JsonProperty("returned")]
         public int Returned { get; set; }
