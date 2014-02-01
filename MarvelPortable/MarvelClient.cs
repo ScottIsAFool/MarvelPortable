@@ -1513,6 +1513,306 @@ namespace MarvelPortable
             return await response.Data.ToCollection<StoryResponse>();
         }
 
+        /// <summary>
+        /// Gets the stories asynchronous.
+        /// </summary>
+        /// <param name="modifiedSince">The modified since.</param>
+        /// <param name="creatorIds">The creator ids.</param>
+        /// <param name="characterIds">The character ids.</param>
+        /// <param name="seriesIds">The series ids.</param>
+        /// <param name="comicIds">The comic ids.</param>
+        /// <param name="storyIds">The story ids.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="orderBy">The order by.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<StoryResponse> GetStoriesAsync(
+            DateTime? modifiedSince = null,
+            List<int> creatorIds = null,
+            List<int> characterIds = null,
+            List<int> seriesIds = null,
+            List<int> comicIds = null,
+            List<int> storyIds = null,
+            SortBy? sortBy = null,
+            OrderBy? orderBy = null,
+            int? limit = null,
+            int? offset = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var postData = new Dictionary<string, string>();
+            postData.AddIfNotNull("modifiedSince", modifiedSince);
+            postData.AddIfNotNull("creators", creatorIds);
+            postData.AddIfNotNull("characters", characterIds);
+            postData.AddIfNotNull("series", seriesIds);
+            postData.AddIfNotNull("comics", comicIds);
+            postData.AddIfNotNull("stories", storyIds);
+
+            if (sortBy.HasValue)
+            {
+                var sort = sortBy.Value.GetDescription().ToLower();
+                if (orderBy.HasValue && orderBy == OrderBy.Descending)
+                {
+                    sort = "-" + sort;
+                }
+                postData.Add("orderBy", sort);
+            }
+            postData.AddIfNotNull("limit", limit);
+            postData.AddIfNotNull("offset", offset);
+
+            var options = postData.ToQueryString();
+
+            var response = await GetResponse<Response<Story>>("stories", options, cancellationToken);
+            return await response.Data.ToCollection<StoryResponse>();
+        }
+
+        /// <summary>
+        /// Gets the story asynchronous.
+        /// </summary>
+        /// <param name="storyId">The story identifier.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<StoryResponse> GetStoryAsync(int storyId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var method = string.Format("stories/{0}", storyId);
+            var response = await GetResponse<Response<Story>>(method, string.Empty, cancellationToken);
+            return await response.Data.ToCollection<StoryResponse>();
+        }
+
+        /// <summary>
+        /// Gets the characters for story asynchronous.
+        /// </summary>
+        /// <param name="storyId">The story identifier.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="modifiedSince">The modified since.</param>
+        /// <param name="seriesIds">The series ids.</param>
+        /// <param name="eventIds">The event ids.</param>
+        /// <param name="comicIds">The comic ids.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="orderBy">The order by.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<CharacterResponse> GetCharactersForStoryAsync(
+            int storyId,
+            string name = null,
+            DateTime? modifiedSince = null,
+            List<int> seriesIds = null,
+            List<int> eventIds = null,
+            List<int> comicIds = null,
+            SortBy? sortBy = null,
+            OrderBy? orderBy = null,
+            int? limit = null,
+            int? offset = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var postData = new Dictionary<string, string>();
+            postData.AddIfNotNull("name", name);
+            postData.AddIfNotNull("modifiedSince", modifiedSince);
+            postData.AddIfNotNull("series", seriesIds);
+            postData.AddIfNotNull("events", eventIds);
+            postData.AddIfNotNull("comics", comicIds);
+            if (sortBy.HasValue)
+            {
+                var sort = sortBy.Value.GetDescription().ToLower();
+                if (orderBy.HasValue && orderBy == OrderBy.Descending)
+                {
+                    sort = "-" + sort;
+                }
+                postData.Add("orderBy", sort);
+            }
+            postData.AddIfNotNull("limit", limit);
+            postData.AddIfNotNull("offset", offset);
+
+            var options = postData.ToQueryString();
+            var method = string.Format("stories/{0}/characters", storyId);
+
+            var response = await GetResponse<Response<Character>>(method, options, cancellationToken);
+            return await response.Data.ToCollection<CharacterResponse>();
+        }
+
+        /// <summary>
+        /// Gets the comics for story asynchronous.
+        /// </summary>
+        /// <param name="storyId">The character identifier.</param>
+        /// <param name="comicFormat">The comic format.</param>
+        /// <param name="comicType">Type of the comic.</param>
+        /// <param name="noVariants">The no variants.</param>
+        /// <param name="dateDescriptor">The date descriptor.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date.</param>
+        /// <param name="hasDigitalIssue">The has digital issue.</param>
+        /// <param name="modifiedSince">The modified since.</param>
+        /// <param name="creatorIds">The creator ids.</param>
+        /// <param name="seriesIds">The series ids.</param>
+        /// <param name="eventIds">The event ids.</param>
+        /// <param name="storyIds">The story ids.</param>
+        /// <param name="otherCharacterIds">The other character ids.</param>
+        /// <param name="collaboratorIds">The collaborator ids.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="orderBy">The order by.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<ComicResponse> GetComicsForStoryAsync(
+            int storyId,
+            ComicFormat? comicFormat = null,
+            ComicType? comicType = null,
+            bool? noVariants = null,
+            DateDescriptor? dateDescriptor = null,
+            DateTime? fromDate = null,
+            DateTime? toDate = null,
+            bool? hasDigitalIssue = null,
+            DateTime? modifiedSince = null,
+            List<int> creatorIds = null,
+            List<int> seriesIds = null,
+            List<int> eventIds = null,
+            List<int> otherCharacterIds = null,
+            List<int> collaboratorIds = null,
+            ComicSortBy? sortBy = null,
+            OrderBy? orderBy = null,
+            int? limit = null,
+            int? offset = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var postData = GetComicsDictionaryInternal(
+                new Dictionary<string, string>(),
+                comicFormat,
+                comicType,
+                noVariants,
+                dateDescriptor,
+                fromDate,
+                toDate,
+                hasDigitalIssue,
+                modifiedSince,
+                creatorIds,
+                seriesIds,
+                eventIds,
+                null,
+                otherCharacterIds,
+                collaboratorIds,
+                sortBy,
+                orderBy,
+                limit,
+                offset);
+
+            var options = postData.ToQueryString();
+            var method = string.Format("stories/{0}/comics", storyId);
+
+            var response = await GetResponse<Response<Comic>>(method, options, cancellationToken);
+
+            return await response.Data.ToCollection<ComicResponse>();
+        }
+
+        /// <summary>
+        /// Gets the creators for story asynchronous.
+        /// </summary>
+        /// <param name="storyId">The story identifier.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="middleName">Name of the middle.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="suffix">The suffix.</param>
+        /// <param name="modifiedSince">The modified since.</param>
+        /// <param name="comicIds">The comic ids.</param>
+        /// <param name="seriesIds">The series ids.</param>
+        /// <param name="eventsIds">The events ids.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="orderBy">The order by.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<CreatorResponse> GetCreatorsForStoryAsync(
+            int storyId,
+            string firstName = null,
+            string middleName = null,
+            string lastName = null,
+            string suffix = null,
+            DateTime? modifiedSince = null,
+            List<int> comicIds = null,
+            List<int> seriesIds = null,
+            List<int> eventsIds = null,
+            CreatorSortBy? sortBy = null,
+            OrderBy? orderBy = null,
+            int? limit = null,
+            int? offset = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var postData = new Dictionary<string, string>();
+            postData.AddIfNotNull("firstName", firstName);
+            postData.AddIfNotNull("middleName", middleName);
+            postData.AddIfNotNull("lastName", lastName);
+            postData.AddIfNotNull("suffix", suffix);
+            postData.AddIfNotNull("modifiedSince", modifiedSince);
+            postData.AddIfNotNull("comics", comicIds);
+            postData.AddIfNotNull("series", seriesIds);
+            postData.AddIfNotNull("events", eventsIds);
+
+            if (sortBy.HasValue)
+            {
+                var sort = sortBy.Value.GetDescription().ToLower();
+                if (orderBy.HasValue && orderBy == OrderBy.Descending)
+                {
+                    sort = "-" + sort;
+                }
+                postData.Add("orderBy", sort);
+            }
+            postData.AddIfNotNull("limit", limit);
+            postData.AddIfNotNull("offset", offset);
+
+            var options = postData.ToQueryString();
+            var method = string.Format("stories/{0}/creators", storyId);
+
+            var response = await GetResponse<Response<Creator>>(method, options, cancellationToken);
+            return await response.Data.ToCollection<CreatorResponse>();
+        }
+
+        public async Task<EventResponse> GetEventsForStoryAsync(
+            int storyId,
+            string eventName = null,
+            DateTime? modifiedSince = null,
+            List<int> creatorIds = null,
+            List<int> seriesIds = null,
+            List<int> comicIds = null,
+            List<int> characterIds = null,
+            SortBy? sortBy = null,
+            OrderBy? orderBy = null,
+            int? limit = null,
+            int? offset = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var postData = new Dictionary<string, string>();
+            postData.AddIfNotNull("name", eventName);
+            postData.AddIfNotNull("modifiedSince", modifiedSince);
+            postData.AddIfNotNull("creators", creatorIds);
+            postData.AddIfNotNull("series", seriesIds);
+            postData.AddIfNotNull("comics", comicIds);
+            postData.AddIfNotNull("characters", characterIds);
+
+            if (sortBy.HasValue)
+            {
+                var sort = sortBy.Value.GetDescription().ToLower();
+                if (orderBy.HasValue && orderBy == OrderBy.Descending)
+                {
+                    sort = "-" + sort;
+                }
+                postData.Add("orderBy", sort);
+            }
+            postData.AddIfNotNull("limit", limit);
+            postData.AddIfNotNull("offset", offset);
+
+            var options = postData.ToQueryString();
+            var method = string.Format("stories/{0}/events", storyId);
+
+            var response = await GetResponse<Response<Event>>(method, options, cancellationToken);
+
+            return await response.Data.ToCollection<EventResponse>();
+        }
+
+
         #region Internal methods
         private static Dictionary<string, string> GetComicsDictionaryInternal(
             Dictionary<string, string> postData,
