@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <version>$version$-beta</version>
+    <authors>ScottIsAFool</authors>
+    <owners />
+    <id>MarvelPortable</id>
+    <title />
+    <projectUrl>https://github.com/scottisafool/marvelportable</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A PCL that allows access to the Marvel comic API.</description>
+  </metadata>
+  <files />
+</package>
