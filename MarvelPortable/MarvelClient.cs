@@ -122,6 +122,30 @@ namespace MarvelPortable
             return await response.Data.ToCollection<CharacterResponse>();
         }
 
+        /// <summary>
+        /// Gets the comics for character asynchronous.
+        /// </summary>
+        /// <param name="characterId">The character identifier.</param>
+        /// <param name="comicFormat">The comic format.</param>
+        /// <param name="comicType">Type of the comic.</param>
+        /// <param name="noVariants">The no variants.</param>
+        /// <param name="dateDescriptor">The date descriptor.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date.</param>
+        /// <param name="hasDigitalIssue">The has digital issue.</param>
+        /// <param name="modifiedSince">The modified since.</param>
+        /// <param name="creatorIds">The creator ids.</param>
+        /// <param name="seriesIds">The series ids.</param>
+        /// <param name="eventIds">The event ids.</param>
+        /// <param name="storyIds">The story ids.</param>
+        /// <param name="otherCharacterIds">The other character ids.</param>
+        /// <param name="collaboratorIds">The collaborator ids.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="orderBy">The order by.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
         public async Task<ComicResponse> GetComicsForCharacterAsync(
             int characterId,
             ComicFormat? comicFormat = null,
@@ -141,14 +165,45 @@ namespace MarvelPortable
             ComicSortBy? sortBy = null,
             OrderBy? orderBy = null,
             int? limit = null,
-            int? offset = null)
+            int? offset = null,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var postData = new Dictionary<string, string> { { "characterId", characterId.ToString() } };
 
             postData.AddIfNotNull("format", comicFormat);
+            postData.AddIfNotNull("formatType", comicFormat);
+            postData.AddIfNotNull("noVariants", noVariants);
+            postData.AddIfNotNull("dateDescriptor", dateDescriptor);
+            if (fromDate.HasValue && toDate.HasValue)
+            {
+                var range = string.Format("{0},{1}", fromDate.Value.ToString("YYYY-MM-DD"), toDate.Value.ToString("YYYY-MM-DD"));
+                postData.Add("dateRange", range);
+            }
 
+            postData.AddIfNotNull("hasDigitalIssue", hasDigitalIssue);
+            postData.AddIfNotNull("modifiedSince", modifiedSince);
+            postData.AddIfNotNull("creators", creatorIds);
+            postData.AddIfNotNull("series", seriesIds);
+            postData.AddIfNotNull("events", eventIds);
+            postData.AddIfNotNull("stories", storyIds);
+            postData.AddIfNotNull("sharedAppearances", otherCharacterIds);
+            postData.AddIfNotNull("collaborators", collaboratorIds);
 
-            return new ComicResponse();
+            var sort = sortBy.ToString().ToLower();
+            if (orderBy == OrderBy.Descending)
+            {
+                sort = "-" + sort;
+            }
+            postData.Add("orderBy", sort);
+            postData.AddIfNotNull("limit", limit);
+            postData.AddIfNotNull("offset", offset);
+
+            var options = postData.ToQueryString();
+            var method = string.Format("characters/{0}/comics", characterId);
+
+            var response = await GetResponse<Response<Comic>>(method, options, cancellationToken);
+
+            return await response.Data.ToCollection<ComicResponse>();
         }
 
         private async Task<TReturnType> GetResponse<TReturnType>(string method, string options, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string callingMethod = "") where TReturnType : MarvelBase

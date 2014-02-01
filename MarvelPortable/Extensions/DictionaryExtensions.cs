@@ -30,6 +30,14 @@ namespace MarvelPortable.Extensions
             }
         }
 
+        internal static void AddIfNotNull(this Dictionary<string, string> postData, string key, bool? item)
+        {
+            if (item.HasValue)
+            {
+                postData.Add(key, item.Value.ToString());
+            }
+        }
+
         internal static void AddIfNotNull(this Dictionary<string, string> postData, string key, string item)
         {
             if (!string.IsNullOrEmpty(item))
