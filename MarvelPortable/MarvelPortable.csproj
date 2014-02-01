@@ -62,6 +62,7 @@
     <Compile Include="Model\CreatorItem.cs" />
     <Compile Include="Model\Creator.cs" />
     <Compile Include="Model\Creators.cs" />
+    <Compile Include="Model\CreatorSortBy.cs" />
     <Compile Include="Model\Data.cs" />
     <Compile Include="Model\DateDescriptor.cs" />
     <Compile Include="Model\DateItem.cs" />
