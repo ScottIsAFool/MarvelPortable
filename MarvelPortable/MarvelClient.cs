@@ -1914,12 +1914,12 @@ namespace MarvelPortable
 
         private string GetHashAndTimeStamp()
         {
-            var now = DateTime.Now.ToString();
+            var now = DateTime.Now.Ticks.ToString();
 
             var toHash = string.Concat(now, PrivateKey, ApiKey);
-            var hash = MD5Core.GetHashString(toHash);
+            var hash = MD5Core.GetHashString(toHash).ToLower();
 
-            return string.Format("&ts={0}&hash={1}", now, hash);
+            return string.Format("&ts={0}&hash={1}&apikey={2}", now, hash, ApiKey);
         }
     }
 }

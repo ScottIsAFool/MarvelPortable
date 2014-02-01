@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Diagnostics;
+using Newtonsoft.Json;
 using PropertyChanged;
 
 namespace MarvelPortable.Model
 {
+    [DebuggerDisplay("Title = {Title}, ID = {Id}")]
     [ImplementPropertyChanged]
     public class Comic
     {
@@ -58,7 +60,7 @@ namespace MarvelPortable.Model
         public Url[] Urls { get; set; }
 
         [JsonProperty("series")]
-        public Collection Series { get; set; }
+        public CollectionWithUri Series { get; set; }
 
         [JsonProperty("variants")]
         public CollectionItem[] Variants { get; set; }
@@ -88,7 +90,7 @@ namespace MarvelPortable.Model
         public Collection Characters { get; set; }
 
         [JsonProperty("stories")]
-        public Collection Stories { get; set; }
+        public CollectionWithUri Stories { get; set; }
 
         [JsonProperty("events")]
         public Collection Events { get; set; }

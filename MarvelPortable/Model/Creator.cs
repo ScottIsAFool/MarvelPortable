@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Diagnostics;
+using Newtonsoft.Json;
 using PropertyChanged;
 
 namespace MarvelPortable.Model
 {
+    [DebuggerDisplay("Name = {FirstName} {LastName}, ID = {Id}")]
     [ImplementPropertyChanged]
     public class Creator
     {
@@ -37,10 +39,10 @@ namespace MarvelPortable.Model
         public Collection Comics { get; set; }
 
         [JsonProperty("series")]
-        public Collection Series { get; set; }
+        public CollectionWithUri Series { get; set; }
 
         [JsonProperty("stories")]
-        public Collection Stories { get; set; }
+        public CollectionWithUri Stories { get; set; }
 
         [JsonProperty("events")]
         public Collection Events { get; set; }
