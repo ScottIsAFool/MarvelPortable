@@ -70,7 +70,7 @@ namespace MarvelPortable
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         public async Task<CharacterResponse> GetCharactersAsync(
-            string name = "",
+            string name = null,
             DateTime? modifiedSince = null,
             List<int> comicIds = null,
             List<int> seriesIds = null,
@@ -660,7 +660,6 @@ namespace MarvelPortable
         /// <param name="toDate">To date.</param>
         /// <param name="hasDigitalIssue">The has digital issue.</param>
         /// <param name="modifiedSince">The modified since.</param>
-        /// <param name="creatorIds">The creator ids.</param>
         /// <param name="seriesIds">The series ids.</param>
         /// <param name="eventIds">The event ids.</param>
         /// <param name="storyIds">The story ids.</param>
@@ -1047,7 +1046,6 @@ namespace MarvelPortable
         /// <param name="modifiedSince">The modified since.</param>
         /// <param name="comicIds">The comic ids.</param>
         /// <param name="seriesIds">The series ids.</param>
-        /// <param name="eventIds">The event ids.</param>
         /// <param name="storyIds">The story ids.</param>
         /// <param name="sortBy">The sort by.</param>
         /// <param name="orderBy">The order by.</param>
@@ -1064,7 +1062,6 @@ namespace MarvelPortable
             DateTime? modifiedSince = null,
             List<int> comicIds = null,
             List<int> seriesIds = null,
-            List<int> eventIds = null,
             List<int> storyIds = null,
             CreatorSortBy? sortBy = null,
             OrderBy? orderBy = null,
@@ -1098,6 +1095,61 @@ namespace MarvelPortable
 
             var response = await GetResponse<Response<Creator>>(method, options, cancellationToken);
             return await response.Data.ToCollection<CreatorResponse>();
+        }
+
+        /// <summary>
+        /// Gets the stories for event asynchronous.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="modifiedSince">The modified since.</param>
+        /// <param name="creatorIds">The creator ids.</param>
+        /// <param name="seriesIds">The series ids.</param>
+        /// <param name="comicIds">The comic ids.</param>
+        /// <param name="characterIds">The character ids.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="orderBy">The order by.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<StoryResponse> GetStoriesForEventAsync(
+            int eventId,
+            DateTime? modifiedSince = null,
+            List<int> creatorIds = null,
+            List<int> seriesIds = null,
+            List<int> comicIds = null,
+            List<int> characterIds = null,
+            SortBy? sortBy = null,
+            OrderBy? orderBy = null,
+            int? limit = null,
+            int? offset = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var postData = new Dictionary<string, string>();
+            postData.AddIfNotNull("modifiedSince", modifiedSince);
+            postData.AddIfNotNull("creators", creatorIds);
+            postData.AddIfNotNull("series", seriesIds);
+            postData.AddIfNotNull("comics", comicIds);
+            postData.AddIfNotNull("characters", characterIds);
+
+            if (sortBy.HasValue)
+            {
+                var sort = sortBy.Value.GetDescription().ToLower();
+                if (orderBy.HasValue && orderBy == OrderBy.Descending)
+                {
+                    sort = "-" + sort;
+                }
+                postData.Add("orderBy", sort);
+            }
+            postData.AddIfNotNull("limit", limit);
+            postData.AddIfNotNull("offset", offset);
+
+            var options = postData.ToQueryString();
+            var method = string.Format("comic/{0}/stories", eventId);
+
+            var response = await GetResponse<Response<Story>>(method, options, cancellationToken);
+
+            return await response.Data.ToCollection<StoryResponse>();
         }
 
         #region Internal methods
