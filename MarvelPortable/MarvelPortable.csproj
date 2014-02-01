@@ -75,6 +75,8 @@
     <Compile Include="Model\Previous.cs" />
     <Compile Include="Model\PriceItem.cs" />
     <Compile Include="Model\Response.cs" />
+    <Compile Include="Model\Series.cs" />
+    <Compile Include="Model\SeriesType.cs" />
     <Compile Include="Model\SortBy.cs" />
     <Compile Include="Model\StoryResponse.cs" />
     <Compile Include="Model\TextObject.cs" />

@@ -1152,6 +1152,83 @@ namespace MarvelPortable
             return await response.Data.ToCollection<StoryResponse>();
         }
 
+        /// <summary>
+        /// Gets the series asynchronous.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="modifiedSince">The modified since.</param>
+        /// <param name="comicIds">The comic ids.</param>
+        /// <param name="storyIds">The story ids.</param>
+        /// <param name="eventIds">The event ids.</param>
+        /// <param name="creatorIds">The creator ids.</param>
+        /// <param name="characterIds">The character ids.</param>
+        /// <param name="seriesType">Type of the series.</param>
+        /// <param name="formats">The formats.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="orderBy">The order by.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<SeriesResponse> GetSeriesAsync(
+            string title = null,
+            DateTime? modifiedSince = null,
+            List<int> comicIds = null,
+            List<int> storyIds = null,
+            List<int> eventIds = null,
+            List<int> creatorIds = null,
+            List<int> characterIds = null,
+            SeriesType? seriesType = null,
+            List<ComicFormat> formats = null,
+            SortBy? sortBy = null,
+            OrderBy? orderBy = null,
+            int? limit = null,
+            int? offset = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var postData = new Dictionary<string, string>();
+            postData.AddIfNotNull("title", title);
+            postData.AddIfNotNull("modifiedSince", modifiedSince);
+            postData.AddIfNotNull("comics", comicIds);
+            postData.AddIfNotNull("stories", storyIds);
+            postData.AddIfNotNull("events", eventIds);
+            postData.AddIfNotNull("creators", creatorIds);
+            postData.AddIfNotNull("characters", characterIds);
+            postData.AddIfNotNull("seriesType", seriesType);
+            postData.AddIfNotNull("contains", formats);
+            if (sortBy.HasValue)
+            {
+                var sort = sortBy.Value.GetDescription().ToLower();
+                if (orderBy.HasValue && orderBy == OrderBy.Descending)
+                {
+                    sort = "-" + sort;
+                }
+                postData.Add("orderBy", sort);
+            }
+            postData.AddIfNotNull("limit", limit);
+            postData.AddIfNotNull("offset", offset);
+
+            var options = postData.ToQueryString();
+
+            var response = await GetResponse<Response<Series>>("series", options, cancellationToken);
+
+            return await response.Data.ToCollection<SeriesResponse>();
+        }
+
+        /// <summary>
+        /// Gets the series asynchronous.
+        /// </summary>
+        /// <param name="seriesId">The series identifier.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<SeriesResponse> GetSeriesAsync(int seriesId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var method = string.Format("series/{0}", seriesId);
+
+            var response = await GetResponse<Response<Series>>(method, string.Empty, cancellationToken);
+            return await response.Data.ToCollection<SeriesResponse>();
+        }
+
         #region Internal methods
         private static Dictionary<string, string> GetComicsDictionaryInternal(
             Dictionary<string, string> postData,
