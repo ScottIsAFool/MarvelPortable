@@ -13,7 +13,7 @@ namespace MarvelPortable
 {
     public class MarvelClient : IMarvelClient
     {
-        private const string ApiUrl = "http://gateway.marvel.com/v1/public";
+        internal const string ApiUrl = "http://gateway.marvel.com/v1/public";
 
         private readonly ILogger _logger;
 

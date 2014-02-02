@@ -8,10 +8,7 @@ namespace MarvelPortable.Model
     {
         [JsonProperty("available")]
         public int Available { get; set; }
-
-        [JsonProperty("collectionURI")]
-        public string CollectionUri { get; set; }
-
+        
         [JsonProperty("items")]
         public CollectionItem[] Items { get; set; }
 

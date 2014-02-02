@@ -30,10 +30,10 @@ namespace MarvelPortable.Model
         public Collection Comics { get; set; }
 
         [JsonProperty("series")]
-        public CollectionWithUri Series { get; set; }
+        public Collection Series { get; set; }
 
         [JsonProperty("stories")]
-        public CollectionWithUri Stories { get; set; }
+        public Collection Stories { get; set; }
 
         [JsonProperty("events")]
         public Collection Events { get; set; }

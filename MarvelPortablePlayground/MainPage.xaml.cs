@@ -16,7 +16,7 @@ namespace MarvelPortablePlayground
 
         private async void DoSomethingButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var response = await _client.GetStoriesForCharacterAsync(1009718);
+            var response = await _client.GetCharactersAsync("Captain America");
         }
     }
 }

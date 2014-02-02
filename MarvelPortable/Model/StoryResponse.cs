@@ -36,7 +36,7 @@ namespace MarvelPortable.Model
         public Collection Characters { get; set; }
 
         [JsonProperty("series")]
-        public CollectionWithUri Series { get; set; }
+        public Collection Series { get; set; }
 
         [JsonProperty("comics")]
         public Collection Comics { get; set; }
